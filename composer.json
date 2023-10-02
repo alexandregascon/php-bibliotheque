@@ -1,0 +1,15 @@
+{
+    "name": "gascona/php-bibliotheque",
+    "autoload": {
+        "psr-4": {
+            "Gascona\\PhpBibliotheque\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alexandre Gascon",
+            "email": "alexandregascon@sfr.fr"
+        }
+    ],
+    "require": {}
+}
