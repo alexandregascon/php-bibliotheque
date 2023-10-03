@@ -8,13 +8,35 @@ class Adherents{
     private string $numAdherent;
     private string $prenom;
     private string $nom;
-    private ?string $dateAdhesion;
+    private \DateTime $dateAdhesion;
 
     public function __construct(string $prenom, string $nom, ?string $dateAdhesion){
         $this->nom = $nom;
         $this->prenom = $prenom;
-        $this->numAdherent = "pas fini";
-        $this->dateAdhesion = $dateAdhesion;
+        $this->numAdherent = $this->genererNumero();
+        $this->dateAdhesion = \DateTime::createFromFormat('d/m/Y',$dateAdhesion);
+    }
+
+    public function genererNumero(): string{
+        return "AD-".rand(0,999999);
+    }
+
+    public function renouvelerAdhesion(): void{
+        $this->dateAdhesion->modify("+1 years");
+    }
+
+    public function getInformationsAdherent(): array{
+        $resultat = [
+            $this->nom,
+            $this->prenom,
+            $this->numAdherent,
+            $this->dateAdhesion->format("d/m/Y")
+        ];
+        return $resultat;
+    }
+
+    public function etatAdhesion(): bool{
+        return "en travaux";
     }
 
     /**

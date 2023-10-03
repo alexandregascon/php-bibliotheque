@@ -4,15 +4,12 @@ namespace App;
 
 abstract class Medias{
     protected string $titre;
-    protected int $dureeEmrpunt;
 
     /**
      * @param string $titre
-     * @param int $dureeEmprunt
      */
-    public function __construct(string $titre, int $dureeEmprunt){
+    public function __construct(string $titre){
         $this->titre = $titre;
-        $this->dureeEmrpunt = $dureeEmprunt;
     }
 
     /**
@@ -26,9 +23,5 @@ abstract class Medias{
     /**
      * @return int
      */
-    public function getDureeEmrpunt()
-    {
-        return $this->dureeEmrpunt;
-    }
 
 }
