@@ -14,6 +14,16 @@ class Magazine extends Medias{
         $this->dureeEmprunt=10;
     }
 
+    public function informationsMagazine(): array{
+        $resultat = [
+            $this->getTitre(),
+            $this->getNumero(),
+            $this->getDatePublication()->format("d/m/Y"),
+            $this->getDureeEmprunt()
+        ];
+        return $resultat;
+    }
+
     /**
      * @return string
      */

@@ -10,11 +10,19 @@ class Adherents{
     private string $nom;
     private \DateTime $dateAdhesion;
 
+    /**
+     *  @param null|string $dateAdhesion
+     */
     public function __construct(string $prenom, string $nom, ?string $dateAdhesion){
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->numAdherent = $this->genererNumero();
-        $this->dateAdhesion = \DateTime::createFromFormat('d/m/Y',$dateAdhesion);
+        if($dateAdhesion == null){
+            $this->dateAdhesion = new \DateTime();
+            $this->dateAdhesion->format("d/m/Y");
+        }else{
+            $this->dateAdhesion = \DateTime::createFromFormat('d/m/Y',$dateAdhesion);
+        }
     }
 
     public function genererNumero(): string{
@@ -36,7 +44,12 @@ class Adherents{
     }
 
     public function etatAdhesion(): bool{
-        return "en travaux";
+        $date = new \DateTime();
+        if($this->dateAdhesion < date_modify($date,"-1 years")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**

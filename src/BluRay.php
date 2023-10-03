@@ -16,6 +16,17 @@ class BluRay extends Medias{
         $this->dureeEmprunt= 15;
     }
 
+    public function informationsBluRay(): array{
+        $resultat = [
+            $this->getTitre(),
+            $this->getRealisateur(),
+            $this->getDuree(),
+            $this->getAnneeSortie(),
+            $this->getDureeEmprunt()
+        ];
+        return $resultat;
+    }
+
     /**
      * @return string
      */

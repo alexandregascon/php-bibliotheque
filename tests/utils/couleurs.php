@@ -1,5 +1,6 @@
 <?php
 
+
 // Couleurs de texte
 const BLUE = "\033[34m";
 const YELLOW = "\033[33m";

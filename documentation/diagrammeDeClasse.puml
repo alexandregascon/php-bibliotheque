@@ -11,6 +11,7 @@ class Livre{
     -auteur : string
     -nombrePages : int
     -duréeEmprunt : int
+    +informationsLivre()
 }
 
 class BluRay{
@@ -18,12 +19,14 @@ class BluRay{
     -durée : string
     -annéeSortie : string
     -duréeEmprunt : int
+    +informationsBluRay()
 }
 
 class Magazine{
     -numéro : string
     -datePublication : dateTime
     -duréeEmprunt : int
+    +informationsMagazine()
 }
 
 class Adherents{
@@ -41,9 +44,9 @@ class Emprunts{
     -dateEmprunt : dateTime
     -dateRetourEstimée : dateTime
     -dateRetour : dateTime
-    +EtatEmprunt()
+    +retourEmprunt()
     +AlerteEmprunt()
-    +duréeAutorisée()
+    +respectDuréeEmprunt()
     +informationsEmprunt()
 }
 

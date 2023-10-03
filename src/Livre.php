@@ -18,6 +18,18 @@ class Livre extends Medias{
 
     }
 
+    public function informationsLivre(): array{
+        $resultat = [
+            $this->getTitre(),
+            $this->getAuteur(),
+            $this->getIsbn(),
+            $this->getNbPages(),
+            $this->getDureeEmprunt()
+        ];
+
+        return $resultat;
+    }
+
     /**
      * @return string
      */
