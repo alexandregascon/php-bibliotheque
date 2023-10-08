@@ -26,7 +26,7 @@ class Adherents{
     }
 
     public function genererNumero(): string{
-        return "AD-".rand(0,999999);
+        return "AD-".rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
     }
 
     public function renouvelerAdhesion(): void{

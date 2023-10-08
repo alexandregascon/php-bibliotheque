@@ -133,3 +133,27 @@ if($adherent6->getDateAdhesion()->format("d/m/Y") == "12/06/2024"){
 }else{
     echo "Test pas OK".PHP_EOL;
 }
+
+echo PHP_EOL;
+
+echo "Test :  vérifier que le numéro d’adhérent, à la création, est valide";
+echo PHP_EOL;
+
+// Arrange
+
+$adherent7 = new \App\Adherents("Fernando","Alonso","12/06/2023");
+
+// Act
+
+$resultat7 = $adherent7->getNumAdherent();
+$identifiant = substr($resultat7,0,3);
+$nombreChiffre = substr($resultat7, 3,15);
+$nombreChiffre = strlen($nombreChiffre);
+
+// Assertion
+
+if($identifiant == "AD-" and $nombreChiffre == 6){
+    echo "Test OK".PHP_EOL;
+}else{
+    echo "Test pas OK".PHP_EOL;
+}

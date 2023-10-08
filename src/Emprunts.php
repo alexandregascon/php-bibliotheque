@@ -2,43 +2,46 @@
 
 namespace App;
 
-class Emprunts{
+class Emprunts
+{
     private \DateTime $dateEmprunt;
     private \DateTime $dateRetourEstimee;
     private ?\DateTime $dateRetour;
     private Medias $medias;
     private Adherents $adherent;
 
-    public function __construct(Adherents $adherent, Medias $medias){
+    public function __construct(Adherents $adherent, Medias $medias)
+    {
         $this->adherent = $adherent;
         $this->dateEmprunt = new \DateTime();
         $this->dateEmprunt->format("d/m/Y");
         $this->medias = $medias;
         if ($this->medias instanceof Livre) {
-            $this->dateRetourEstimee = date_modify($this->dateEmprunt,"+21 days");
-            $this->dateEmprunt = date_modify($this->dateEmprunt,"-21 days");
+            $this->dateEmprunt->modify("+21 days");
+            $this->dateRetourEstimee = $this->dateEmprunt;
         }
         if ($this->medias instanceof BluRay) {
-            $this->dateRetourEstimee = date_modify($this->dateEmprunt,"+15 days");
-            $this->dateEmprunt = date_modify($this->dateEmprunt,"-15 days");
+            $this->dateEmprunt->modify("+15 days");
+            $this->dateRetourEstimee = $this->dateEmprunt;
         }
         if ($this->medias instanceof Magazine) {
-            $this->dateRetourEstimee = date_modify($this->dateEmprunt,"+10 days");
-            $this->dateEmprunt = date_modify($this->dateEmprunt,"-10 days");
+            $this->dateEmprunt->modify("+10 days");
+            $this->dateRetourEstimee = $this->dateEmprunt;
         }
         $this->dateRetour = null;
+        $this->dateEmprunt = new \DateTime();
     }
 
     public function informationsEmprunt(): array
     {
-            $resultat = [
-                $this->dateEmprunt->format("d/m/Y"),
-                $this->dateRetourEstimee->format("d/m/Y"),
-                $this->adherent->getNumAdherent(),
-                $this->adherent->getPrenom(),
-                $this->adherent->getNom(),
-                $this->adherent->getDateAdhesion()->format("d/m/Y")
-            ];
+        $resultat = [
+            $this->dateEmprunt->format("d/m/Y"),
+            $this->dateRetourEstimee->format("d/m/Y"),
+            $this->adherent->getNumAdherent(),
+            $this->adherent->getPrenom(),
+            $this->adherent->getNom(),
+            $this->adherent->getDateAdhesion()->format("d/m/Y")
+        ];
         if ($this->medias instanceof Livre) {
             $resultat[] = $this->medias->getTitre();
             $resultat[] = $this->medias->getNbPages();
@@ -61,35 +64,40 @@ class Emprunts{
             $resultat[] = $this->medias->getDureeEmprunt();
             $resultat[] = $this->medias->getTitre();
         }
-            return $resultat;
+        return $resultat;
+    }
+
+    public function retourEmprunt(): bool
+    {
+        if ($this->dateRetour == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public function alerteEmprunt(): bool
+    {
+        if ($this->retourEmprunt() == false and $this->dateRetourEstimee < new \DateTime()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function respectDureeEmprunt(): int
+    {
+        if ($this->retourEmprunt() == true and $this->dateRetour > $this->dateRetourEstimee) {
+            return 1;
+        } elseif ($this->retourEmprunt() == true and $this->dateRetour <= $this->dateRetourEstimee) {
+            return 2;
+        } elseif ($this->retourEmprunt() == false) {
+            return 3;
+        }else{
+            return 0;
         }
 
-        public function retourEmprunt(): bool{
-            if($this->dateRetour == null){
-                return false;
-            }
-                return true;
-        }
 
-        public function alerteEmprunt(): bool{
-            if($this->retourEmprunt() == false and $this->dateRetourEstimee < new \DateTime()){
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-        public function respectDureeEmprunt(): int{
-            if($this->retourEmprunt() == true and $this->dateRetour > $this->dateRetourEstimee){
-                return 1;
-            }elseif($this->retourEmprunt() == true and $this->dateRetour <= $this->dateRetourEstimee){
-                return 2;
-            }elseif($this->retourEmprunt() == false){
-                return 3;
-            }
-
-
-        }
+    }
 
     /**
      * @return \DateTime
@@ -100,11 +108,11 @@ class Emprunts{
     }
 
     /**
-     * @param \DateTime $dateEmprunt
+     * @param string $dateEmprunt
      */
-    public function setDateEmprunt(\DateTime $dateEmprunt): void
+    public function setDateEmprunt(string $dateEmprunt): void
     {
-        $this->dateEmprunt = $dateEmprunt;
+        $this->dateEmprunt = \DateTime::createFromFormat("d/m/Y",$dateEmprunt);
     }
 
     /**
@@ -116,11 +124,11 @@ class Emprunts{
     }
 
     /**
-     * @param \DateTime $dateRetour
+     * @param string $dateRetourEstimee
      */
-    public function setDateRetourEstimee(\DateTime $dateRetourEstimee): void
+    public function setDateRetourEstimee(string $dateRetourEstimee): void
     {
-        $this->dateRetour = $dateRetourEstimee;
+        $this->dateRetourEstimee = \DateTime::createFromFormat("d/m/Y",$dateRetourEstimee);
     }
 
     /**
